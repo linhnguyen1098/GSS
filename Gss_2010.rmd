@@ -1,6 +1,6 @@
 ---
 title: "Social Survey 2010"
-author: "Put your name here!"
+author: "Linh Nguyen"
 date: "Fall 2018"
 output:
   html_document:
@@ -22,7 +22,8 @@ Use the data from the 2010 general social survey to explore whether belief in co
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
-
+In this survey, to compare three different categories, we first use the bar graph; then, we use the table to show the numerical results, and finally, we use the chi-square statistics test which shows the null hypothesis that helps us to conclude if any variable are independent or dependent of each other.  
+  
 #Results
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
@@ -32,7 +33,6 @@ alldata <- read.csv(file="gss2010.csv", header=TRUE)
 #names(alldata)
 ```
 
-
 ## Descriptive Results
 
 ### Graphical Descriptive Results
@@ -41,18 +41,70 @@ alldata <- read.csv(file="gss2010.csv", header=TRUE)
 
 ```{r}
 barchartGC(~race+condrift, data=alldata, type = "percent") 
-```
+```  
+  
+It looks like that black people are less likely to believe in continental drift comparing to others and white people. Others and white people are more favored in continental drift.  
 
+```{r}
+barchartGC(~race+cappun, data=alldata, type = "percent")
+```  
+  
+It looks like that black people are more opposed in the capital punishments comparing to other categories. Others and white people have more favored in the capital punishments; especially white people.    
+
+```{r}
+barchartGC(~cappun+condrift, data=alldata, type = "percent")
+```    
+  
+The graph shows that the view on capitol punishments does not have relation in continental driff. There is a difference between two categories.  
 
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
+```{r}
+tab = xtabs(~race+condrift,data=alldata)
+rowPerc(tab)
+```  
+  
+There are 76.70% of black people that less likely to believe in continental drift comparing others and white people. Therefore, they have more percentage which is 23.30% comparing other categories that do not believe in continental drift.    
+
+```{r}
+tab = xtabs(~race+cappun,data=alldata)
+rowPerc(tab)
+```    
+  
+This shows that black people are less likely to believe in capitol punishments which they only have 46.79%. The whites have more favored in capitol punishments which they have the highest percentage(72.74%). Others have 56.47% favoring the capitol punishments.  
+  
+```{r}
+tab = xtabs(~cappun+condrift,data=alldata)
+rowPerc(tab)
+```  
+  
+The result shows that capitol punishments and continental drift seem not have any relationship.  
+
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
-
+```{r}
+chisqtestGC(~race+condrift,data=alldata, graph=TRUE)
+```  
+  
+We reject the hypothesis. There are a big contribution from the black people do not believe in continental drift and from a small amount of white people do not believe in continental drift. This proves that race and continental drift are not related to each other.The null hypothesis is 21.2753. Therefore, they are independent. 
+  
+```{r}
+chisqtestGC(~race+cappun,data=alldata, graph=TRUE)
+```  
+  
+We reject the hypothesis. There is also a big contribution from the black people that do not believe in capitol punishments which is 37.05 and from a small amount of others that do not favored the capitol punishments. There is also a huge difference between race and capitol punishments. The null hypothesis of the chi-square statistic shows that the difference is 82.6238. Therefore, there are independent.  
+  
+```{r}
+chisqtestGC(~cappun+condrift,data=alldata, graph=TRUE)
+```  
+  
+We do no reject the hypothesis. The null hypothesis of the chi-square test is 0.0696. We can see that there is some relationship between capitol punishments and continental drift. Therefore, there are dependent.  
+  
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+One variable can cause the change of the results of other variables. Both bar graph and the table show that the black people are less likely to believe in capitol punishments and continental drift comparing to others and white people. When we use the chi-square statistic test, the null hypothesis shows race to capitol punishments and race to continental drift are all independent. However, the null hypothesis shows that capitol punishments and continental drift have some relationships and are dependent.  
